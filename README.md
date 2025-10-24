@@ -9,8 +9,10 @@ This repo tests those capabilities so I have a point of reference, and a barebon
 - [Documentation for Prisma ORM](https://www.prisma.io/docs/orm/overview/introduction/what-is-prisma) - Info on [Schema](https://www.prisma.io/docs/orm/prisma-schema/overview) creation and [CRUD](https://www.prisma.io/docs/orm/prisma-client/queries/crud) can be found here
 - [A guide on integrating Prisma into a Bun program](https://www.prisma.io/docs/guides/bun)
 
-# To test prisma I'm using: 
-A script to make calls to build up and manipulate the data in the desired manner.
+# To test prisma: 
+I'm running/building index.ts to make calls to build up and manipulate the data in the desired manner.
+
+My test data will be pool toys in a box on a shelf in the garage of the tester residence.
 
 # To run the program
 TODO: Test the running steps to ensure I'm not missing steps.
@@ -39,9 +41,6 @@ TODO: Test the running steps to ensure I'm not missing steps.
 - Deleting data from single table 
 - Deleting data in multiple tables in single transaction
 
-My test data will be pool toys in a box on a shelf in the garage of the tester residence.
-
 # TODO 
-- Remove bun? I don't think I use it at all.
 - Organize code so there is a little more abstraction between the calls to manipulate data, and the prisma code needed to make it happen. This will make it easier to follow and reference the example code later.
 - Add a section here on file structure and what files are for what.
