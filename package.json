@@ -1,0 +1,24 @@
+{
+  "name": "prisma-poc-database",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "migrate": "npx prisma migrate dev",
+    "start": "npx tsx index.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "prisma": "^6.17.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^6.17.1",
+    "@prisma/client": "^6.17.1",
+    "dotenv": "^17.2.3"
+  }
+}

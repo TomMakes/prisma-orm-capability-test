@@ -1,0 +1,9 @@
+node_modules/
+generated/
+prisma/migrations/
+*.log
+.env
+.env.*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

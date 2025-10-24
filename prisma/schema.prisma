@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Building {
+  id    Int     @id @default(autoincrement())
+  name String
+  floors Floor[]
+}
+model Floor {
+  id    Int     @id @default(autoincrement())
+  name String
+  building Building @relation(fields: [buildingId], references: [id])
+  buildingId  Int
+  rooms Room[]
+}
+model Room {
+  id    Int     @id @default(autoincrement())
+  name String
+  containers Container[]
+  parentRoom Room? @relation("ZtM_ParentRoomToRooms", fields: [parentRoomId], references: [id])
+  parentRoomId Int?
+  rooms Room[] @relation("ZtM_ParentRoomToRooms")
+  floor Floor @relation(fields: [floorId], references: [id])
+  floorId  Int
+}
+// Each wall, piece of furniture, box, and set of shelves are containers.
+model Container {
+  id    Int     @id @default(autoincrement())
+  name String
+  shelves Shelf[] @relation("OtM_ContainerToShelves")
+  shelf Shelf? @relation("OtM_ShelfToContainers", fields: [shelfId], references: [id])
+  shelfId Int?
+  room Room @relation(fields: [roomId], references: [id])
+  roomId Int
+}
+model Shelf {
+  id    Int     @id @default(autoincrement())
+  name String
+  items Item[]
+  containers Container[] @relation("OtM_ShelfToContainers")
+  container Container @relation("OtM_ContainerToShelves", fields: [containerId], references: [id])
+  containerId Int
+}
+// An item always exists on a shelf, but what about if an item exists on the floor?
+model Item {
+  id    Int     @id @default(autoincrement())
+  name String
+  isLoaned Boolean @default(false)
+  shelf Shelf? @relation(fields: [shelfId], references: [id])
+  shelfId Int?
+}
