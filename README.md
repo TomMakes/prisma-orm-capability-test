@@ -32,7 +32,7 @@ TODO: Test the running steps to ensure I'm not missing steps.
 - Fetching data from one table 
 - Attempting to fetch non-existent data 
 - Fetching data with related data from another table 
-- Update: 
+## Update: 
 - Updating single property 
 - Updating multiple properties 
 - Updating property with invalid type 
