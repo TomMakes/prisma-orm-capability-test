@@ -1,13 +1,6 @@
-console.log('Hello via Bun!');
-
-import { PrismaClient, type Building, type Container } from './generated/prisma';
-
-const prisma = new PrismaClient();
-
-interface OrgData<T> {
-  name: string,
-  data?: T
-}
+import { type Building, type Container } from './generated/prisma';
+import { createWallsOfRecRoom, type OrgData } from './utils/dal';
+import { prisma } from './utils/singletons';
 
 async function main() {
   // Create tester residence which has a ground floor
@@ -45,43 +38,21 @@ async function main() {
       name: 'Garage',
       floorId: groundFloor.id,
       containers: {
-        create: [
-          {
-            name: 'North Wall',
-          },
-          {
-            name: 'East Wall',
-          },
-          {
-            name: 'South Wall',
-          },
-          {
-            name: 'West Wall',
-          },
-        ],
       },
     },
   });
   console.log(garage);
-  const northWall: { name: string, data: any } = {
-    name: 'North Wall',
-    data: null
-  };
-  northWall.data = (
-    await prisma.room.findUnique({
-      where: { id: garage.id },
-      include: {  
-        containers: true,
-      },
-    })
-  )?.containers.find((container) => container.name === northWall.name);
+  // Create walls (containers), with one shelf each
+  const garageWalls = await createWallsOfRecRoom(garage);
+  const northWall = garageWalls.find((wall) => wall.name == "North Wall")
+  console.log(northWall);
   // Next up: We need to create the shelves along with the container.
   // I propose we write a new function to do that.
-  if (!northWall.data) {
-    throwError('locate', northWall.name);
+  if (!northWall?.data) {
+    throwError('locate', "North Wall");
     return;
   }
-  console.log(northWall.data);
+  console.log(garageWalls);
   // create a box (container, with one shelf)
   // const box: OrgData<Container> = {
   //   name: "Pool toy box"
