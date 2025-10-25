@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug TypeScript",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/index.ts",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["tsx"],
+      "console": "integratedTerminal",
+      "envFile": "${workspaceFolder}/.env",
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "node_modules/**"
+      ]
+    },
+    {
+      "name": "Debug TypeScript (tsx watch)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/index.ts",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["tsx", "--watch"],
+      "console": "integratedTerminal",
+      "envFile": "${workspaceFolder}/.env",
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**",
+        "node_modules/**"
+      ],
+      "restart": true
+    }
+  ]
+}

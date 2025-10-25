@@ -31,7 +31,7 @@ async function main() {
     throwError('locate', 'Ground floor');
     return;
   }
-  console.log(groundFloor);
+  console.log(`Created ${groundFloor.name} of ${testerHouse.name}, as well as the residence.`);
   // Create garage, with 4 walls, located on ground floor
   const garage = await prisma.room.create({
     data: {
@@ -45,15 +45,12 @@ async function main() {
   // Create walls (containers), with one shelf each
   const garageWalls = await createWallsOfRecRoom(garage);
   const northWall = garageWalls.find((wall) => wall.name == "North Wall")
-  console.log(northWall);
-  // Next up: We need to create the shelves along with the container.
-  // I propose we write a new function to do that.
+  console.log(`Created ${garage.name} with ${garageWalls.length} walls, one of them being the ${northWall?.name}.`);
   if (!northWall?.data) {
     throwError('locate', "North Wall");
     return;
   }
-  console.log(garageWalls);
-  // create a box (container, with one shelf)
+  // Next up: create a box (container, with one shelf)
   // const box: OrgData<Container> = {
   //   name: "Pool toy box"
   // };

@@ -6,13 +6,16 @@
   "scripts": {
     "migrate": "npx prisma migrate dev",
     "start": "npx tsx index.ts",
+    "debug": "npx tsx index.ts",
+    "debug:watch": "npx tsx --watch index.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "devDependencies": {
     "@types/node": "^24.9.1",
     "prettier": "^3.6.2",
-    "prisma": "^6.17.1"
+    "prisma": "^6.17.1",
+    "tsx": "^4.20.6"
   },
   "peerDependencies": {
     "typescript": "^5"

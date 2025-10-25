@@ -1,0 +1,8 @@
+{
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "debug.allowBreakpointsEverywhere": true,
+  "debug.inlineValues": "auto",
+  "debug.showBreakpointsInOverviewRuler": true
+}
