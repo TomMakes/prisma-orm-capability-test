@@ -13,11 +13,14 @@ export async function createWallsOfRecRoom( room: Room ): Promise<OrgData<Contai
     // Create the individual walls, with 1 shelf for each
     const parents = { room };
     const walls = ['North Wall', 'East Wall', 'South Wall', 'West Wall'];
-    const wallsToReturn: OrgData<Container>[] = [];
-    walls.forEach( async wallName => {
-        const wallData = await createContainer(parents, wallName, 0);
-        wallsToReturn.push({ name: wallName, data: wallData});
-    });
+    
+    const wallsToReturn = await Promise.all(
+        walls.map(async wallName => {
+            const wallData = await createContainer(parents, wallName, 0);
+            return { name: wallName, data: wallData };
+        })
+    );
+    
     return wallsToReturn;
 }
 
