@@ -3,10 +3,12 @@ import { createWallsOfRecRoom, type OrgData } from './utils/dal';
 import { prisma } from './utils/singletons';
 
 async function main() {
+  const invalidId = -1;
   // Create tester residence which has a ground floor
+  // This tests: Saving data into multiple tables
   const testerHouse: OrgData<Building> = {
     name: 'Tester Residence'
-  } ;
+  };
   testerHouse.data = await prisma.building.create({
     data: {
       name: 'Tester Residence',
@@ -19,6 +21,7 @@ async function main() {
       },
     },
   });
+  // This tests: Fetching data with related data from another table 
   const groundFloor = (
     await prisma.building.findUnique({
       where: { id: testerHouse.data.id },
@@ -33,6 +36,7 @@ async function main() {
   }
   console.log(`Created ${groundFloor.name} of ${testerHouse.name}, as well as the residence.`);
   // Create garage, with 4 walls, located on ground floor
+  // This tests: Saving data into one table
   const garage = await prisma.room.create({
     data: {
       name: 'Garage',
@@ -41,6 +45,21 @@ async function main() {
       },
     },
   });
+  // Attempt to create a Room with an invalid floor id
+  // This tests: Attempting and failing to save invalid data. 
+  try {
+    await prisma.room.create({
+      data: {
+        name: 'Garage',
+        floorId: invalidId,
+        containers: {
+        },
+      },
+    });
+  } catch (error) {
+    console.log('The fail floor has failed to create.')
+    console.log(error);
+  }
   console.log(garage);
   // Create walls (containers), with one shelf each
   const garageWalls = await createWallsOfRecRoom(garage);

@@ -2,7 +2,7 @@
 This repo is a guide for using [Prisma](https://www.prisma.io/).
 
 I want to be sure Prisma supports the various capabilities I want it to have if I use it for a project.
-This repo tests those capabilities so I have a point of reference, and a barebones project for future testing.
+This repo tests those capabilities so I have a point of reference, and a bare bones project for future testing.
 
 # Useful links for Prisma
 - [A quickstart guide on Prisma](https://www.prisma.io/docs/getting-started/quickstart-sqlite), uses SQLite and Typescript, and it easy to follow.
@@ -15,8 +15,7 @@ I'm running/building index.ts to make calls to build up and manipulate the data 
 My test data will be pool toys in a box on a shelf in the garage of the tester residence.
 
 # To run the program
-TODO: Test the running steps to ensure I'm not missing steps.
-1. Install node
+1. Install node (This project was tested on version 24.6.0)
 1. Open terminal inside repo folder
 1. Run command `npm ci` to install packages
 1. Copy env.txt and rename file .env
@@ -25,13 +24,14 @@ TODO: Test the running steps to ensure I'm not missing steps.
 1. Run command `npm run start` to create the database data.
 
 # Features I want to test are:
-## Create: 
-- Saving data into one table 
-- attempting and failing to save invalid data. 
+## Create:
+- (Done) Saving data into one table 
+- (Done) Saving data into multiple tables
+- (Done) Attempting and failing to save invalid data. 
 ## Read: 
 - Fetching data from one table 
 - Attempting to fetch non-existent data 
-- Fetching data with related data from another table 
+- (Done) Fetching data with related data from another table 
 ## Update: 
 - Updating single property 
 - Updating multiple properties 
