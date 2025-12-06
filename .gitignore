@@ -140,4 +140,5 @@ vite.config.ts.timestamp-*
 
 # Prisma files
 prisma/*.db
+db/*.db
 generated
