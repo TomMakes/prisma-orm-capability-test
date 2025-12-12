@@ -1,5 +1,5 @@
 import { type Building, type Container } from './generated/prisma';
-import { createWallsOfRecRoom, type OrgData } from './utils/dal';
+import { createContainer, createWallsOfRecRoom, getShelfOfContainer, type OrgData } from './utils/dal';
 import { prisma } from './utils/singletons';
 
 async function main() {
@@ -56,9 +56,9 @@ async function main() {
         },
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.log('The fail floor has failed to create.')
-    console.log(error);
+    console.log(error?.message ?? error);
   }
   console.log(garage);
   // Create walls (containers), with one shelf each
@@ -69,6 +69,20 @@ async function main() {
     throwError('locate', "North Wall");
     return;
   }
+  const northWallFloor = await getShelfOfContainer(northWall.data, 'Floor');
+  if (!northWallFloor) {
+    throwError('locate', "North Wall");
+    return;
+  }
+  // create a 2 tier shelf (container with 2 shelves)
+  // against the north wall (container, with one shelf)
+  const twoTierShelf: OrgData<Container> = { name: "Two Tier Shelf" };
+  twoTierShelf.data = await createContainer(
+    { shelf: northWallFloor, room: garage },
+    twoTierShelf.name,
+    2
+  );
+  // Next step: Create a script to delete db (if exists, run migrate, then run program)
   // Next up: create a box (container, with one shelf)
   // const box: OrgData<Container> = {
   //   name: "Pool toy box"
@@ -79,8 +93,6 @@ async function main() {
 
   //   }
   // });
-  // resting on a 2 tier shelf (container with 2 shelves),
-  // against the north wall (container, with one shelf)
 
   // the contents of the box are:
   //  - air pump

@@ -47,3 +47,19 @@ export async function createContainer(
     });
     return container;
 }
+
+export async function getShelfOfContainer(
+    container: Container,
+    shelfName: string ): Promise<Shelf | undefined> {
+    const shelves = await prisma.shelf.findMany({
+        where: {
+            containerId: {
+                equals: container.id
+            }
+        }
+    });
+
+   return shelves.find(shelf => {
+    shelf.name === shelfName
+   });
+}
