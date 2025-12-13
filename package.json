@@ -6,6 +6,7 @@
   "scripts": {
     "migrate": "npx prisma migrate dev",
     "start": "npx tsx index.ts",
+    "testWindows": "powershell -Command \"if (Test-Path ./db/dev.db) { Remove-Item ./db/dev.db }\" && npm run migrate && npm start",
     "debug": "npx tsx index.ts",
     "debug:watch": "npx tsx --watch index.ts",
     "format": "prettier --write .",

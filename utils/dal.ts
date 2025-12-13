@@ -58,8 +58,7 @@ export async function getShelfOfContainer(
             }
         }
     });
-
-   return shelves.find(shelf => {
+   return shelves.find(shelf =>
     shelf.name === shelfName
-   });
+   );
 }

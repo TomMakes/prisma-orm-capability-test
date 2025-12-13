@@ -71,7 +71,7 @@ async function main() {
   }
   const northWallFloor = await getShelfOfContainer(northWall.data, 'Floor');
   if (!northWallFloor) {
-    throwError('locate', "North Wall");
+    throwError('locate', "North Wall Floor");
     return;
   }
   // create a 2 tier shelf (container with 2 shelves)
@@ -82,7 +82,7 @@ async function main() {
     twoTierShelf.name,
     2
   );
-  // Next step: Create a script to delete db (if exists, run migrate, then run program)
+  console.log(twoTierShelf.data);
   // Next up: create a box (container, with one shelf)
   // const box: OrgData<Container> = {
   //   name: "Pool toy box"
