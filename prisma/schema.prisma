@@ -8,7 +8,6 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 
 model Building {
@@ -51,7 +50,9 @@ model Shelf {
   container Container @relation("OtM_ContainerToShelves", fields: [containerId], references: [id])
   containerId Int
 }
-// An item always exists on a shelf, but what about if an item exists on the floor?
+// An item can exist on a shelf in a container,
+// or when loaned, it's location will not be tracked further (for now)
+// TODO: To be cheeky, we could put items on shelves that are named after the loanee
 model Item {
   id    Int     @id @default(autoincrement())
   name String
