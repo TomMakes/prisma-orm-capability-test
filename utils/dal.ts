@@ -1,6 +1,6 @@
 /** This file contains functions to assist in CRUD activities */
 
-import type { Container, Room, Shelf } from "../generated/prisma";
+import type { Container, Item, Room, Shelf } from "../generated/prisma";
 import { prisma } from "./singletons";
 
 export interface OrgData<T> {
@@ -46,6 +46,19 @@ export async function createContainer(
         }
     });
     return container;
+}
+
+export async function createItem(
+    parents: { shelf?: Shelf },
+    name: string, isLoaned: boolean = false ): Promise<Item> {
+    const item = await prisma.item.create({
+        data: {
+            name,
+            isLoaned,
+            shelfId: parents?.shelf?.id ?? undefined,
+        }
+    });
+    return item;
 }
 
 export async function getShelfOfContainer(

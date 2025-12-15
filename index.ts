@@ -1,5 +1,5 @@
 import { type Building, type Container } from './generated/prisma';
-import { createContainer, createWallsOfRecRoom, getShelfOfContainer, type OrgData } from './utils/dal';
+import { createContainer, createItem, createWallsOfRecRoom, getShelfOfContainer, type OrgData } from './utils/dal';
 import { prisma } from './utils/singletons';
 
 async function main() {
@@ -82,27 +82,40 @@ async function main() {
     twoTierShelf.name,
     2
   );
-  console.log(twoTierShelf.data);
-  // Next up: create a box (container, with one shelf)
-  // const box: OrgData<Container> = {
-  //   name: "Pool toy box"
-  // };
-  // box.data = prisma.container.create({
-  //   data: {
-  //     name: box.name,
+  // console.log(twoTierShelf.data);
+  // get second shelf of 2 tier shelf
+  const secondShelf = await getShelfOfContainer(twoTierShelf.data, 'Shelf 2');
 
-  //   }
-  // });
+  // Create a box (container, with one shelf)
+  const poolToyBox: OrgData<Container> = {
+    name: "Pool toy box"
+  };
+  poolToyBox.data = await createContainer(
+    { shelf: secondShelf, room: garage },
+    poolToyBox.name,
+    1
+  );
+  console.log(poolToyBox.data)
+  const poolToyInside = await getShelfOfContainer( poolToyBox.data, 'Shelf 1');
 
   // the contents of the box are:
   //  - air pump
   //  - fun noodle
   //  - basketball
-  // if (!groundFloor) {
-  //     throwError('create', 'Ground floor');
-  //     return;
-  // }
-  // const
+  const airPumpItem = await createItem(
+    { shelf: poolToyInside },
+    'Air Pump'
+  );
+  const funNoodleItem = await createItem(
+    { shelf: poolToyInside },
+    'Fun Noodle'
+  );
+  const basketballItem = await createItem(
+    { shelf: poolToyInside },
+    'Basketball'
+  );
+  console.log('Created pool toy box contents!');
+  // Next up: 
 }
 function throwError(operation: string, object: string) {
   console.log(`${operation} for model ${object} failed, exiting..`);
