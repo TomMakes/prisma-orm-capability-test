@@ -69,10 +69,16 @@ async function main() {
     throwError('locate', "North Wall");
     return;
   }
+  // This tests: Fetching data from one table 
   const northWallFloor = await getShelfOfContainer(northWall.data, 'Floor');
   if (!northWallFloor) {
     throwError('locate', "North Wall Floor");
     return;
+  }
+  // This tests: Attempting to fetch non-existent data
+  const falseWallShelf = await getShelfOfContainer(northWall.data, 'Shelf Invalid');
+  if (!falseWallShelf) {
+    console.log("locate for model False wall shelf failed")
   }
   // create a 2 tier shelf (container with 2 shelves)
   // against the north wall (container, with one shelf)
@@ -115,7 +121,28 @@ async function main() {
     'Basketball'
   );
   console.log('Created pool toy box contents!');
-  // Next up: 
+  // Move air pump to North wall floor
+  // This tests: Updating single property
+  // This tests: Updating foreign key ref in data
+  const movedBasketball = await prisma.item.update({
+    where: {
+      id: basketballItem.id
+    },
+    data: {
+      shelfId: northWallFloor.id
+    }
+  });
+  // Loan out air pump
+  // This tests: Updating multiple properties 
+  const loanedAirPump = await prisma.item.update({
+    where: {
+      id: airPumpItem.id
+    },
+    data: {
+      shelfId: null,
+      isLoaned: true
+    }
+  });
 }
 function throwError(operation: string, object: string) {
   console.log(`${operation} for model ${object} failed, exiting..`);

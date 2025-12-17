@@ -29,14 +29,13 @@ My test data will be pool toys in a box on a shelf in the garage of the tester r
 - (Done) Saving data into multiple tables
 - (Done) Attempting and failing to save invalid data. 
 ## Read: 
-- Fetching data from one table 
-- Attempting to fetch non-existent data 
+- (Done) Fetching data from one table 
+- (Done) Attempting to fetch non-existent data 
 - (Done) Fetching data with related data from another table 
 ## Update: 
-- Updating single property 
-- Updating multiple properties 
-- Updating property with invalid type 
-- Updating foreign key ref in data
+- (Done) Updating single property 
+- (Done) Updating multiple properties 
+- (Done) Updating foreign key ref in data
 ## Delete: 
 - Deleting data from single table 
 - Deleting data in multiple tables in single transaction
