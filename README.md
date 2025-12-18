@@ -37,9 +37,39 @@ My test data will be pool toys in a box on a shelf in the garage of the tester r
 - (Done) Updating multiple properties 
 - (Done) Updating foreign key ref in data
 ## Delete: 
-- Deleting data from single table 
-- Deleting data in multiple tables in single transaction
+- (Done) Deleting data from single table 
+- (Done) Fail to delete item with foreign key dependencies
+- (Done) Deleting data in multiple tables in single transaction
+
+# Project File Structure
+
+## Root Files
+- **`index.ts`** - Main entry point that demonstrates all Prisma CRUD operations with test data (pool toys in a box)
+- **`package.json`** - Node.js project configuration with scripts for migration, running, and debugging
+- **`tsconfig.json`** - TypeScript compiler configuration
+- **`prisma.config.ts`** - Prisma configuration file that defines schema path, migrations path, and datasource
+- **`env.txt`** - Template for environment variables (copy to `.env` and configure `DATABASE_URL`)
+- **`README.md`** - This file, project documentation
+
+## Directories
+
+### `prisma/`
+Prisma-related files and database migrations
+- **`schema.prisma`** - Database schema definition with models (Building, Floor, Room, Container, Shelf, Item)
+- **`migrations/`** - Database migration history
+  - **`migration_lock.toml`** - Migration lock file
+  - **`20251022165354_init/migration.sql`** - Initial migration SQL
+
+### `utils/`
+Utility functions and singleton instances
+- **`dal.ts`** - Data Access Layer with helper functions for CRUD operations (e.g., `createContainer`, `createItem`, `createWallsOfRecRoom`)
+- **`singletons.ts`** - Singleton objects, primarily the Prisma Client instance with SQLite adapter configuration
+
+### `db/`
+SQLite database files (created after running migrations)
+
+### `generated/` _(ignored)_
+Auto-generated Prisma Client code (regenerated when schema changes)
 
 # TODO 
-- Organize code so there is a little more abstraction between the calls to manipulate data, and the prisma code needed to make it happen. This will make it easier to follow and reference the example code later.
-- Add a section here on file structure and what files are for what.
+- None at this time
