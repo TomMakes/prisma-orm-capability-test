@@ -1,5 +1,5 @@
 import { type Building, type Container } from './generated/prisma';
-import { createContainer, createItem, createWallsOfRecRoom, getShelfOfContainer, type OrgData } from './utils/dal';
+import { createContainer, createItem, createWallsOfRecRoom, deleteContainer, getShelfOfContainer, type OrgData } from './utils/dal';
 import { prisma } from './utils/singletons';
 
 async function main() {
@@ -143,6 +143,29 @@ async function main() {
       isLoaned: true
     }
   });
+  // Delete the fun noodle
+  // This tests: Deleting data from single table
+  const deletedFunNoodle = await prisma.item.delete({
+    where: {
+      id: funNoodleItem.id
+    }
+  });
+  // Fail to delete 2 tier shelf
+  // This tests: Fail to delete item with foreign key dependencies
+  try {
+    const deleted2TierShelf = await prisma.container.delete({
+      where: {
+        id: twoTierShelf.data.id
+      }
+    });
+  } catch (error: any) {
+    console.log('The 2 tier shelf has failed to delete')
+    console.log(error?.message ?? error);
+  }
+  // Delete 2 tier shelf (container) + shelves
+  // *Note: In production, any container with items inside should not be able to be deleted
+  // This tests: Deleting data in multiple tables in single transaction
+  const deleted2TierShelf = await deleteContainer(twoTierShelf.data);
 }
 function throwError(operation: string, object: string) {
   console.log(`${operation} for model ${object} failed, exiting..`);

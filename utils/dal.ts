@@ -1,4 +1,7 @@
-/** This file contains functions to assist in CRUD activities */
+/** This file contains functions to assist in CRUD activities 
+ * Here is where most of the interactions directly with Prisma are done,
+ * which is why it's called the dal (data access layer)
+*/
 
 import type { Container, Item, Room, Shelf } from "../generated/prisma";
 import { prisma } from "./singletons";
@@ -74,4 +77,22 @@ export async function getShelfOfContainer(
    return shelves.find(shelf =>
     shelf.name === shelfName
    );
+}
+
+export async function deleteContainer(
+    container: Container
+) {
+    const deleteShelvesAction = prisma.shelf.deleteMany({
+        where: {
+            containerId: container.id,
+        },
+    });
+    const deleteContainerAction = prisma.container.delete({
+        where: {
+            id: container.id
+        }
+    });
+    const transaction = await prisma.$transaction(
+        [deleteShelvesAction, deleteContainerAction]);
+    return transaction;
 }
